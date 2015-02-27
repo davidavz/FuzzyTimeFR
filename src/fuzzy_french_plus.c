@@ -146,6 +146,16 @@ void update_watch(struct tm * t) {
 		if(strcmp(new_time.lineStr[2], cur_time.lineStr[2]) != 0) updateLayer(Txl_line[2], 2);
 		if(strcmp(new_time.lineStr[3], cur_time.lineStr[3]) != 0) updateLayer(Txl_line[3], 3);
 	}
+	
+	//"midi" line bold
+	if(t->tm_hour == 12 && t->tm_min < 33){
+		text_layer_set_font(Txl_line[1]->layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
+		text_layer_set_font(Txl_line[1]->layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
+	}else{
+		text_layer_set_font(Txl_line[1]->layer[0], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
+		text_layer_set_font(Txl_line[1]->layer[1], fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
+	}
+	
 	// vibrate at o'clock from 8 to 24
 	if(t->tm_min == 0 && t->tm_sec == 0 && t->tm_hour >= 8 && t->tm_hour <= 24 ) vibes_double_pulse();
 	if(t->tm_min == 59 && t->tm_sec == 57 && t->tm_hour >= 7 && t->tm_hour <= 23 ) vibes_short_pulse();
